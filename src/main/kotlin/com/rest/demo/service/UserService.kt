@@ -14,8 +14,6 @@ class UserService {
     @Autowired private lateinit var repository: UserRepository
 
     fun createUser(user: UserModel): UserModel{
-        print("M<<<<<<<")
-        print(user)
         return repository.save(user)
     }
 

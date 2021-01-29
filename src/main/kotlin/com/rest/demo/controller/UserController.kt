@@ -6,18 +6,24 @@ import lombok.extern.slf4j.Slf4j
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.http.HttpStatus
 import org.springframework.http.ResponseEntity
+import org.springframework.validation.annotation.Validated
 import org.springframework.web.bind.annotation.*
+import org.springframework.web.multipart.MultipartFile
+import java.nio.file.Files
+import java.nio.file.Paths
+import javax.validation.Valid
+import kotlin.io.path.Path
 
 @RestController
 @RequestMapping("/api/users")
-@Slf4j
+@Validated
 class UserController {
 
     @Autowired
     lateinit var service: UserService
 
     @PostMapping
-    fun createUser(@RequestBody body: UserModel): ResponseEntity<UserModel> {
+    fun createUser(@Valid @RequestBody body: UserModel): ResponseEntity<UserModel> {
         return ResponseEntity.ok().body(service.createUser(body))
     }
 
@@ -38,6 +44,23 @@ class UserController {
     fun deleteUser(@PathVariable id: Long): HttpStatus {
         service.deteleteUser(id)
         return HttpStatus.NO_CONTENT
+    }
+
+    @PatchMapping
+    fun uploadFile(
+        @RequestParam("file") file: MultipartFile,
+    ): ResponseEntity<*> {
+        val locationUploaded = "C://upload_image//"
+
+        return if (file.isEmpty) {
+            ResponseEntity.badRequest().body(HttpStatus.BAD_REQUEST)
+        } else {
+            val fileByte = file.bytes
+            val path = Paths.get("$locationUploaded${file.originalFilename}")
+            Files.write(path, fileByte)
+
+            ResponseEntity.ok().body((HttpStatus.OK))
+        }
     }
 
 }
