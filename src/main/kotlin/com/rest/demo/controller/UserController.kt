@@ -1,43 +1,39 @@
 package com.rest.demo.controller
 
-import com.rest.demo.model.UserModel
+import com.rest.demo.entity.UserEntity
 import com.rest.demo.service.UserService
-import lombok.extern.slf4j.Slf4j
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.http.HttpStatus
 import org.springframework.http.ResponseEntity
-import org.springframework.validation.annotation.Validated
 import org.springframework.web.bind.annotation.*
 import org.springframework.web.multipart.MultipartFile
 import java.nio.file.Files
 import java.nio.file.Paths
 import javax.validation.Valid
-import kotlin.io.path.Path
 
 @RestController
 @RequestMapping("/api/users")
-@Validated
 class UserController {
 
     @Autowired
     lateinit var service: UserService
 
     @PostMapping
-    fun createUser(@Valid @RequestBody body: UserModel): ResponseEntity<UserModel> {
+    fun createUser(@Valid @RequestBody body: UserEntity): ResponseEntity<UserEntity> {
         return ResponseEntity.ok().body(service.createUser(body))
     }
 
     @GetMapping
-    fun getUsers(): ResponseEntity<List<UserModel>> = ResponseEntity.ok().body(
+    fun getUsers(): ResponseEntity<List<UserEntity>> = ResponseEntity.ok().body(
         service.getUsers()
     )
 
     @GetMapping("/{id}")
-    fun getUserById(@PathVariable id: Long): ResponseEntity<UserModel> =
+    fun getUserById(@PathVariable id: Long): ResponseEntity<UserEntity> =
         ResponseEntity.ok().body(service.getUserById(id))
 
     @PutMapping
-    fun updateUser(@RequestBody body: UserModel): ResponseEntity<UserModel> =
+    fun updateUser(@RequestBody body: UserEntity): ResponseEntity<UserEntity> =
         ResponseEntity.ok().body(service.updateUser(body))
 
     @DeleteMapping("/{id}")
