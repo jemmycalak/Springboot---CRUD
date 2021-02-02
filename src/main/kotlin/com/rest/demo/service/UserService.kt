@@ -1,8 +1,9 @@
 package com.rest.demo.service
 
-import com.rest.demo.model.UserModel
+import com.rest.demo.entity.UserEntity
 import com.rest.demo.repository.UserRepository
-import com.rest.demo.utils.CustomException
+import com.rest.demo.utils.exception.CustomException
+//import com.rest.demo.utils.exception.CustomException
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.stereotype.Service
 import org.springframework.transaction.annotation.Transactional
@@ -11,17 +12,16 @@ import org.springframework.transaction.annotation.Transactional
 @Transactional
 class UserService {
 
-    @Autowired private lateinit var repository: UserRepository
+    @Autowired
+    lateinit var repository: UserRepository
 
-    fun createUser(user: UserModel): UserModel{
-        print("M<<<<<<<")
-        print(user)
+    fun createUser(user: UserEntity): UserEntity{
         return repository.save(user)
     }
 
-    fun getUsers(): List<UserModel> = repository.findAll()
+    fun getUsers(): List<UserEntity> = repository.findAll()
 
-    fun getUserById(id: Long): UserModel {
+    fun getUserById(id: Long): UserEntity? {
         //return repository.findById(id)
         val userTable = repository.findById(id)
 
@@ -31,7 +31,7 @@ class UserService {
         throw CustomException("User not found")
     }
 
-    fun updateUser(user: UserModel): UserModel {
+    fun updateUser(user: UserEntity): UserEntity? {
         val userTable = repository.findById(user.id)
 
         if (userTable.isPresent) {

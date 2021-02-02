@@ -1,8 +1,8 @@
 package com.rest.demo.repository
 
-import com.rest.demo.model.UserModel
+import com.rest.demo.entity.UserEntity
 import org.springframework.data.jpa.repository.JpaRepository
 
-interface UserRepository: JpaRepository<UserModel, Long> {
+interface UserRepository: JpaRepository<UserEntity, Long> {
 
 }
