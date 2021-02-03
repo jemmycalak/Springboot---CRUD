@@ -12,7 +12,7 @@ import java.nio.file.Paths
 import javax.validation.Valid
 
 @RestController
-@RequestMapping("/api/users")
+@RequestMapping("/api/v1/users")
 class UserController {
 
     @Autowired
