@@ -1,5 +1,6 @@
 package com.rest.demo.models
 
+import com.rest.demo.constant.Constants
 import javax.validation.constraints.*
 
 /*
@@ -22,7 +23,7 @@ data class UserModel (
     @field:NotNull(message = "password should not be empty")
     @field:NotEmpty
     @field:NotBlank(message = "password should not be blank")
-    @field:Pattern(regexp ="^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[#?!@\$%^&*-]).{8,}\$", message = "password regex fail")
+    @field:Pattern(regexp = Constants.regexPassword, message = "password regex fail")
     var password: String?
 
 )
