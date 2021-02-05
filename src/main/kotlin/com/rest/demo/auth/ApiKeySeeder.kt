@@ -8,7 +8,8 @@ import org.springframework.stereotype.Component
 
 /*
 * this class will be run early when application running
-* and will check if any api key on database
+* and will check if any api key on database,
+* if doesn't app will inject apikey
 * */
 @Component
 class ApiKeySeeder(val apikeyRepository: ApikeyRepository): ApplicationRunner {
